@@ -16,7 +16,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".CreateAccountActivity" />
-        <activity android:name=".AlmostDoneActivity"></activity>
+        <activity android:name=".AlmostDoneActivity" />
+        <activity android:name=".DinerActivity"></activity>
     </application>
 
 </manifest>

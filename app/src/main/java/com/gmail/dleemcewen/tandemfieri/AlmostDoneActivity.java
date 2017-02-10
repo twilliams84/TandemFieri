@@ -1,16 +1,15 @@
 package com.gmail.dleemcewen.tandemfieri;
 
 import android.os.Bundle;
-import android.provider.SyncStateContract;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
+import android.widget.Toast;
 
+import com.gmail.dleemcewen.tandemfieri.Entities.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -19,19 +18,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import static android.R.id.edit;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-
-import static com.gmail.dleemcewen.tandemfieri.R.id.phone;
-
 public class AlmostDoneActivity extends AppCompatActivity{
 
     public String firstName, lastName, address, city, state, zip, phoneNumber, email;
@@ -39,9 +25,9 @@ public class AlmostDoneActivity extends AppCompatActivity{
     public EditText username, password, confirmPassword;
     public User newUser;
     private DatabaseReference mDatabase;
-    public RadioGroup radioFilter;
     public RadioButton radioDining, radioRestaurant, radioDriver;
     FirebaseAuth user = FirebaseAuth.getInstance();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,8 +35,6 @@ public class AlmostDoneActivity extends AppCompatActivity{
         setContentView(R.layout.activity_almost_done);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
-
-        radioFilter = (RadioGroup) findViewById(R.id.radioFilter);
 
         radioDining = (RadioButton) findViewById(R.id.diningRadio);
         radioRestaurant = (RadioButton) findViewById(R.id.restaurantRadio);
@@ -71,43 +55,67 @@ public class AlmostDoneActivity extends AppCompatActivity{
         phoneNumber = getIntent().getStringExtra("phoneNumber");
         email = getIntent().getStringExtra("email");
 
-
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                createUser();
+                if (password.getText().toString()
+                        .equals(confirmPassword.getText().toString())
+                        && password.getText().toString().matches(".*\\w.*")
+                        && password.getText().toString().length() >= 6)
+                    createUser();
+                else {
+                    if (!password.getText().toString()
+                            .equals(confirmPassword.getText().toString()))
+                        Toast.makeText(AlmostDoneActivity.this,
+                                "Please input two matching passwords.", Toast.LENGTH_SHORT).show();
+                    else if (!password.getText().toString().matches(".*\\w.*"))
+                        Toast.makeText(AlmostDoneActivity.this,
+                                "Please use characters and not only whitespace.", Toast.LENGTH_SHORT)
+                        .show();
+                    else if (password.getText().toString().length() < 6)
+                        Toast.makeText(AlmostDoneActivity.this,
+                                "Please enter a password with 6 or more characters.",
+                                Toast.LENGTH_SHORT).show();
+                    password.setText("");
+                    confirmPassword.setText("");
+                    password.requestFocus();
+                }
             }
-
         });
 
     }
 
 
     public void createUser (){
-        user.createUserWithEmailAndPassword(email, password.toString()).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+        user.createUserWithEmailAndPassword(email, password.getText().toString()).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-
                     FirebaseUser user = task.getResult().getUser();
-                    newUser = new User(firstName, lastName, address, city, state, zip, phoneNumber, email, username.getText().toString(), user.getUid());
+                    newUser = new User();
+                    newUser.setFirstName(firstName);
+                    newUser.setLastName(lastName);
+                    newUser.setUsername(username.getText().toString());
+                    newUser.setCity(city);
+                    newUser.setAuthUserID(user.getUid());
+                    newUser.setEmail(email);
+                    newUser.setAddress(address);
+                    newUser.setZip(zip);
+                    newUser.setPhoneNumber(phoneNumber);
+                    newUser.setState(state);
                     if (radioDining.isChecked() == true) {
-                        mDatabase.child("User").child("Diner").push().setValue(newUser);
+                        mDatabase.child("User").child("Diner").child(user.getUid()).setValue(newUser);
                     } else if (radioRestaurant.isChecked() == true){
-                        mDatabase.child("User").child("Restaurant").push().setValue(newUser);
+                        mDatabase.child("User").child("Restaurant").child(user.getUid()).setValue(newUser);
                     } else if (radioDriver.isChecked() == true){
-                        mDatabase.child("User").child("Driver").push().setValue(newUser);
+                        mDatabase.child("User").child("Driver").child(user.getUid()).setValue(newUser);
                     }
+
+                    Toast.makeText(getApplicationContext(), "Successfully created user.", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Unable to create user.", Toast.LENGTH_LONG).show();
                 }
             }
         });
-    }
-        createButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                user.createUserWithEmailAndPassword("apettitt@uco.edu", password.toString());
-            }
-        });
-
     }
 }
