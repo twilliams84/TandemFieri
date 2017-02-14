@@ -114,5 +114,4 @@ public class User extends Entity implements Serializable{
 
 
 
-
 }
