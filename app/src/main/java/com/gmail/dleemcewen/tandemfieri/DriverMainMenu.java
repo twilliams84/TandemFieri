@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
->>>>>>> c35b3e1237a8852c67ad01d1cb6929a0679de33e
 import android.widget.Toast;
 
 import com.gmail.dleemcewen.tandemfieri.Entities.User;
