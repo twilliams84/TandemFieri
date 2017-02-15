@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.widget.Button;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -27,19 +28,6 @@ public class RestaurantMainMenu extends AppCompatActivity {
         final User user = (User) bundle.getSerializable("User");
 
         Toast.makeText(getApplicationContext(),"The user is " + user.getEmail(), Toast.LENGTH_LONG).show();
-
-
-        outButton = (Button)findViewById(R.id.sign_out_button);
-
-        outButton.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick(View view) {
-                FirebaseAuth.getInstance().signOut();
-                finish();
-            }
-        });
-
 
         //TODO: remove this, just for testing
         manageRestaurants = (Button)findViewById(R.id.manageRestaurants);

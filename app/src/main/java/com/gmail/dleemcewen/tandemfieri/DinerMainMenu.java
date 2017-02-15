@@ -30,16 +30,7 @@ public class DinerMainMenu extends AppCompatActivity {
 
         Toast.makeText(getApplicationContext(),"The user is " + user.getEmail(), Toast.LENGTH_LONG).show();
 
-        outButton = (Button)findViewById(R.id.sign_out_button);
-
-        outButton.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick(View view) {
-                FirebaseAuth.getInstance().signOut();
-                finish();
-            }
-        });
+       
     }//end onCreate
 
     //create menu
