@@ -1,11 +1,15 @@
 package com.gmail.dleemcewen.tandemfieri.Entities;
 
 import com.gmail.dleemcewen.tandemfieri.Abstracts.Entity;
+import com.gmail.dleemcewen.tandemfieri.MenuBuilder.MenuCatagory;
+
+import java.io.Serializable;
+import java.util.Map;
 
 /**
  * Restaurant defines all the properties and behaviors for a Restaurant entity
  */
-public class Restaurant extends Entity {
+public class Restaurant extends Entity implements Serializable {
     private String name;
     private String street;
     private String city;
@@ -13,11 +17,17 @@ public class Restaurant extends Entity {
     private String zipcode;
     private Double charge;
     private String ownerId;
+    private Map<String, String> drivers;
+    private Integer deliveryRadius;
+    private String id;
+
+    private MenuCatagory menu;
 
     /**
      * Default constructor
      */
-    public Restaurant() {}
+    public Restaurant() {
+    }
 
     /**
      * Optional constructor
@@ -34,6 +44,8 @@ public class Restaurant extends Entity {
     public String getId() {
         return getKey();
     }
+
+    public String getRestaurantKey() { return id; }
 
     /**
      * get the restaurant name
@@ -146,4 +158,40 @@ public class Restaurant extends Entity {
     public void setOwnerId(String ownerId) {
         this.ownerId = ownerId;
     }
+
+    public MenuCatagory getMenu() {
+        return menu;
+    }
+
+    public void setMenu(MenuCatagory menu) {
+        this.menu = menu;
+    }
+
+    /**
+     * get the drivers associated with the restaurant
+     * @return return all of the driver ids and names associated with the restaurant
+     */
+    public Map<String, String> getDrivers() {
+        return drivers;
+    }
+
+    /**
+     * sets the drivers associated with the restaurant
+     * @param drivers the id and name of each driver associated with the restaurant
+     */
+    public void setDrivers(Map<String, String> drivers) {
+        this.drivers = drivers;
+    }
+
+    /**
+     * gets the restaurant delivery radius
+     * @return restaurant delivery radius
+     */
+    public Integer getDeliveryRadius() { return deliveryRadius; }
+
+    /**
+     * sets the restaurant delivery radius
+     * @param deliveryRadius identifies the restaurant delivery radius
+     */
+    public void setDeliveryRadius(Integer deliveryRadius) { this.deliveryRadius = deliveryRadius;}
 }

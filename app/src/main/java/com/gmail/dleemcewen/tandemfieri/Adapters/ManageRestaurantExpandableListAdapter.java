@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Typeface;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +16,13 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.gmail.dleemcewen.tandemfieri.DriverRatings;
 import com.gmail.dleemcewen.tandemfieri.Entities.Restaurant;
+import com.gmail.dleemcewen.tandemfieri.MenuBuilder.MenuBuilderActivity;
+import com.gmail.dleemcewen.tandemfieri.MenuBuilder.MenuCatagory;
 import com.gmail.dleemcewen.tandemfieri.R;
 import com.gmail.dleemcewen.tandemfieri.Repositories.Restaurants;
+import com.gmail.dleemcewen.tandemfieri.RestaurantMapActivity;
 
 import java.util.Arrays;
 import java.util.List;
@@ -234,11 +240,21 @@ public class ManageRestaurantExpandableListAdapter extends BaseExpandableListAda
         //TODO: add click events for buttons
         Button manageMenuItems = (Button)convertView.findViewById(R.id.manageMenuItems);
         Button viewSales = (Button)convertView.findViewById(R.id.viewSales);
+        Button viewDeliveryArea = (Button)convertView.findViewById(R.id.viewDeliveryArea);
         Button rateDrivers = (Button)convertView.findViewById(R.id.rateDrivers);
 
         manageMenuItems.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(context, MenuBuilderActivity.class);
+                if (selectedChild.getMenu()==null){
+                    selectedChild.setMenu(new MenuCatagory("Main"));
+                }
+
+                intent.putExtra("menu",selectedChild.getMenu());
+                intent.putExtra("resturaunt",selectedChild);
+                context.startActivityForResult(intent,111);
+
                 Toast
                     .makeText(context, "Managing menu items for " + selectedChild.getName(), Toast.LENGTH_SHORT)
                     .show();
@@ -252,12 +268,25 @@ public class ManageRestaurantExpandableListAdapter extends BaseExpandableListAda
                     .show();
             }
         });
+        viewDeliveryArea.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, RestaurantMapActivity.class);
+                intent.putExtra("restaurant", selectedChild);
+                context.startActivity(intent);
+            }
+        });
         rateDrivers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast
-                    .makeText(context, "Rating drivers for " + selectedChild.getName(), Toast.LENGTH_SHORT)
-                    .show();
+                //Android assigns a new key to the restaurant when deserializing
+                //so send the existing key along as well so the new key can be replaced
+                Bundle bundle = new Bundle();
+                Intent intent = new Intent(context, DriverRatings.class);
+                bundle.putSerializable("Restaurant", selectedChild);
+                bundle.putString("key", selectedChild.getKey());
+                intent.putExtras(bundle);
+                context.startActivity(intent);
             }
         });
 
@@ -274,5 +303,14 @@ public class ManageRestaurantExpandableListAdapter extends BaseExpandableListAda
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
+    }
+
+    public Restaurant findRefrenceToUpdate(Restaurant restaurant) {
+        for (Restaurant inList : restaurantsList) {
+            if(restaurant.getOwnerId().equals(inList.getOwnerId())
+                    &&restaurant.getName().equals(inList.getName())&&
+                    restaurant.getStreet().equals(inList.getStreet())) return inList;
+        }
+        return null; //something went horribly wrong
     }
 }
