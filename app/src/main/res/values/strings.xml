@@ -68,4 +68,24 @@
     <string name="availableDrivers">Drivers available to be assigned to </string>
     <string name="manageRestaurantDriversActivityTitle">Managing restaurant drivers</string>
     <string name="updateRestaurant">Update Restaurant</string>
+
+    <!-- Diner Main Menu -->
+    <string name="dinerMainMenuTitle">Diner</string>
+    <string name="dinerMainMenuPlaceOrder">Place Order</string>
+    <string name="dinerMainMenuTrackOrders">Track Orders</string>
+    <string name="dinerMainMenuViewOrderHistory">View Order History</string>
+    <string name="dinerMainMenuRateRestaurant">Rate Restaurant</string>
+
+    <!-- Driver Main Menu -->
+    <string name="driverMainMenuTitle">Driver</string>
+    <string name="driverMainMenuViewCurrentOrder">View Current Order</string>
+    <string name="driverMainMenuViewAllOrders">View All Orders</string>
+
+
+    <!-- Restaurant Owner Main Menu -->
+    <string name="ownerMainMenuTitle">Restaurant Owner</string>
+    <string name="ownerMainMenuAssignBusinessHours">Assign Business Hours</string>
+    <string name="ownerMainMenuAssignDrivers">Assign Drivers</string>
+    <string name="ownerMainMenuManageDrivers">Manage Drivers</string>
+    <string name="ownerMainMenuManageRestaurants">Manage Restaurants</string>
 </resources>

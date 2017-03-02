@@ -11,10 +11,56 @@
     tools:context="com.gmail.dleemcewen.tandemfieri.RestaurantMainMenu">
 
     <TextView
-        android:layout_width="match_parent"
+        android:text=""
+        android:textSize="30sp"
+        android:layout_marginTop="50dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/restaurant_main_menu"
-	android:id="@+id/restaurant_text_view"
-        android:textSize="35sp"/>
+        android:layout_centerHorizontal="true"
+        android:id="@+id/restaurantMainMenuName"/>
 
+    <TextView
+        android:text="@string/ownerMainMenuTitle"
+        android:textSize="20sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/restaurantMainMenuName"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/restaurantMainMenuTitle" />
+
+    <Button
+        android:text="@string/ownerMainMenuAssignDrivers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/restaurantMainMenuTitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:id="@+id/restaurantMainMenuAssignDriversButton" />
+
+    <Button
+        android:text="@string/ownerMainMenuManageDrivers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/restaurantMainMenuAssignDriversButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="0dp"
+        android:id="@+id/restaurantMainMenuManageDriversButton" />
+
+    <Button
+        android:text="@string/ownerMainMenuAssignBusinessHours"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/restaurantMainMenuManageDriversButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="0dp"
+        android:id="@+id/restaurantMainMenuAssignBusinessHoursButton" />
+
+    <Button
+        android:text="@string/ownerMainMenuManageRestaurants"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/restaurantMainMenuAssignBusinessHoursButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="0dp"
+        android:id="@+id/restaurantMainMenuManageRestaurantsButton" />
 </RelativeLayout>

@@ -1,12 +1,14 @@
 package com.gmail.dleemcewen.tandemfieri;
 
-import android.os.Bundle;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gmail.dleemcewen.tandemfieri.Entities.User;
@@ -17,7 +19,11 @@ import java.util.logging.Level;
 
 public class DriverMainMenu extends AppCompatActivity {
 
-    User user;
+    private User user;
+
+    private TextView driverMainMenuName;
+    private Button driverMainMenuViewCurrentOrder;
+    private Button driverMainMenuViewAllOrders;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +35,27 @@ public class DriverMainMenu extends AppCompatActivity {
         Bundle bundle = new Bundle();
         bundle = this.getIntent().getExtras();
         user = (User) bundle.getSerializable("User");
+
+
+        driverMainMenuName = (TextView) findViewById(R.id.driverMainMenuName);
+        driverMainMenuViewCurrentOrder = (Button) findViewById(R.id.driverMainMenuViewCurrentOrderButton);
+        driverMainMenuViewAllOrders = (Button) findViewById(R.id.driverMainMenuViewAllOrdersButton);
+
+        driverMainMenuName.setText("Hello, " + user.getFirstName() + "!");
+
+        driverMainMenuViewCurrentOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "View Current Order", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        driverMainMenuViewAllOrders.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "View All Orders", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         LogWriter.log(getApplicationContext(), Level.INFO, "The user is " + user.getEmail());
     }//end onCreate
