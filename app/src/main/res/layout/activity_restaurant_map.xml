@@ -15,15 +15,17 @@
 
         <TextView
             android:id="@+id/tv_area"
-            android:layout_width="wrap_content"
+            android:layout_width="125dp"
+
             android:layout_height="wrap_content"
             android:textSize="@dimen/title_text_size"
             android:text="@string/deliveryRadius"
-            android:layout_marginLeft="10dp"
+
             android:layout_centerVertical="true" />
 
         <com.shawnlin.numberpicker.NumberPicker
             android:id="@+id/radius"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/tv_area"

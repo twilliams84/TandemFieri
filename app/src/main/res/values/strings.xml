@@ -1,5 +1,7 @@
 <resources>
+    <string name="minimum_logging_level">WARNING</string>
     <string name="app_name">Tandem Fieri</string>
+    <string name="multiDex">multidex</string>
     <string name="signInTitle">Tandem Fieri</string>
     <string name="hintEmail">Email</string>
     <string name="hintPassword">Password</string>
@@ -29,20 +31,22 @@
     <string name="hintZipcode">Zipcode</string>
     <string name="restaurantDelivery">Delivery</string>
     <string name="hintDeliveryCharge">Charge</string>
-    <string name="businessHours">Business Hours</string>
+    <string name="deliveryHours">Delivery Hours</string>
     <string name="deliveryArea">Delivery Area</string>
     <string name="nameRequired">Name is required!</string>
     <string name="streetRequired">Street address is required!</string>
-    <string name="manage_restaurants">Manage restaurants (for testing)</string>
     <string name="restaurant_main_menu">Restaurant Owner Main Menu</string>
     <string name="cityRequired">City is required!</string>
     <string name="stateRequired">State is required!</string>
     <string name="zipRequired">Zipcode is required!</string>
+    <string name="deliveryChargeRequired">A delivery charge amount is required!</string>
+    <string name="deliveryChargeGreaterThanZero">Delivery charge amount must be greater than zero!</string>
     <string name="addButton">Add</string>
     <string name="manageMenuItemsButton">Manage menu items</string>
     <string name="viewSalesButton">View sales/products</string>
     <string name="rateDriversButton">View driver ratings</string>
     <string name="viewDeliveryAreaButton">Set Delivery Area</string>
+    <string name="manageDriversButton">Manage drivers</string>
     <string name="manageRestaurantsActivityTitle">Managing restaurants</string>
     <string name="removeConfirmationQuestion">Are you sure you want to remove</string>
     <string name="yes">Yes</string>
@@ -59,4 +63,29 @@
     <string name="updateButton">Update</string>
     <string name="deliveryRadius">Delivery Radius (mi)</string>
     <string name="googleDecoderBaseURL">https://maps.googleapis.com/maps/api/geocode/json?</string>
+    <string name="title_activity_diner_map">Map</string>
+    <string name="driversCurrentlyAssigned">Currently assigned drivers</string>
+    <string name="availableDrivers">Drivers available to be assigned to </string>
+    <string name="manageRestaurantDriversActivityTitle">Managing restaurant drivers</string>
+    <string name="updateRestaurant">Update Restaurant</string>
+
+    <!-- Diner Main Menu -->
+    <string name="dinerMainMenuTitle">Diner</string>
+    <string name="dinerMainMenuPlaceOrder">Place Order</string>
+    <string name="dinerMainMenuTrackOrders">Track Orders</string>
+    <string name="dinerMainMenuViewOrderHistory">View Order History</string>
+    <string name="dinerMainMenuRateRestaurant">Rate Restaurant</string>
+
+    <!-- Driver Main Menu -->
+    <string name="driverMainMenuTitle">Driver</string>
+    <string name="driverMainMenuViewCurrentOrder">View Current Order</string>
+    <string name="driverMainMenuViewAllOrders">View All Orders</string>
+
+
+    <!-- Restaurant Owner Main Menu -->
+    <string name="ownerMainMenuTitle">Restaurant Owner</string>
+    <string name="ownerMainMenuAssignBusinessHours">Assign Business Hours</string>
+    <string name="ownerMainMenuAssignDrivers">Assign Drivers</string>
+    <string name="ownerMainMenuManageDrivers">Manage Drivers</string>
+    <string name="ownerMainMenuManageRestaurants">Manage Restaurants</string>
 </resources>

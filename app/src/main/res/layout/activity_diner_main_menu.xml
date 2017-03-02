@@ -11,9 +11,56 @@
     tools:context="com.gmail.dleemcewen.tandemfieri.DinerMainMenu">
 
     <TextView
-        android:layout_width="match_parent"
+        android:text=""
+        android:textSize="30sp"
+        android:layout_marginTop="50dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Diner Main Menu"
-        android:textSize="35sp"/>
+        android:layout_centerHorizontal="true"
+        android:id="@+id/dinerMainMenuName"/>
 
+    <TextView
+        android:text="@string/dinerMainMenuTitle"
+        android:textSize="20sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dinerMainMenuName"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/dinerMainMenuTitle" />
+
+    <Button
+        android:text="@string/dinerMainMenuPlaceOrder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dinerMainMenuTitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:id="@+id/dinerMainMenuPlaceOrderButton" />
+
+    <Button
+        android:text="@string/dinerMainMenuTrackOrders"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dinerMainMenuPlaceOrderButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="0dp"
+        android:id="@+id/dinerMainMenuTrackOrdersButton" />
+
+    <Button
+        android:text="@string/dinerMainMenuViewOrderHistory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dinerMainMenuTrackOrdersButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="0dp"
+        android:id="@+id/dinerMainMenuViewOrderHistoryButton" />
+
+    <Button
+        android:text="@string/dinerMainMenuRateRestaurant"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dinerMainMenuViewOrderHistoryButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="0dp"
+        android:id="@+id/dinerMainMenuRateRestaurantButton" />
 </RelativeLayout>

@@ -16,13 +16,16 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.gmail.dleemcewen.tandemfieri.CreateDeliveryHoursActivity;
 import com.gmail.dleemcewen.tandemfieri.DriverRatings;
+import com.gmail.dleemcewen.tandemfieri.EditRestaurantActivity;
 import com.gmail.dleemcewen.tandemfieri.Entities.Restaurant;
-import com.gmail.dleemcewen.tandemfieri.MenuBuilder.MenuBuilderActivity;
-import com.gmail.dleemcewen.tandemfieri.MenuBuilder.MenuCatagory;
+import com.gmail.dleemcewen.tandemfieri.ManageRestaurantDrivers;
 import com.gmail.dleemcewen.tandemfieri.R;
 import com.gmail.dleemcewen.tandemfieri.Repositories.Restaurants;
 import com.gmail.dleemcewen.tandemfieri.RestaurantMapActivity;
+import com.gmail.dleemcewen.tandemfieri.menubuilder.MenuBuilderActivity;
+import com.gmail.dleemcewen.tandemfieri.menubuilder.MenuCatagory;
 
 import java.util.Arrays;
 import java.util.List;
@@ -39,6 +42,7 @@ public class ManageRestaurantExpandableListAdapter extends BaseExpandableListAda
     private Map<String, List<Restaurant>> childDataList;
     private Resources resources;
     private Restaurants<Restaurant> restaurantsRepository;
+    private static final int UPDATE_RESTAURANT = 2;
 
     public ManageRestaurantExpandableListAdapter(Activity context, List<Restaurant> restaurantsList,
                                                  Map<String, List<Restaurant>> childDataList) {
@@ -46,7 +50,7 @@ public class ManageRestaurantExpandableListAdapter extends BaseExpandableListAda
         this.restaurantsList = restaurantsList;
         this.childDataList = childDataList;
         resources = context.getResources();
-        restaurantsRepository = new Restaurants<>();
+        restaurantsRepository = new Restaurants<>(context);
     }
 
     /**
@@ -165,6 +169,17 @@ public class ManageRestaurantExpandableListAdapter extends BaseExpandableListAda
         TextView restaurantName = (TextView)convertView.findViewById(R.id.restaurantName);
         restaurantName.setText(restaurant.getName());
         restaurantName.setTypeface(null, Typeface.BOLD);
+        restaurantName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("Restaurant", restaurant);
+                bundle.putString("key", restaurant.getKey());
+                Intent intent = new Intent(context, EditRestaurantActivity.class);
+                intent.putExtras(bundle);
+                context.startActivityForResult(intent, UPDATE_RESTAURANT);
+            }
+        });
 
         Button removeRestaurant = (Button)convertView.findViewById(R.id.remove);
         removeRestaurant.setOnClickListener(new View.OnClickListener() {
@@ -237,11 +252,12 @@ public class ManageRestaurantExpandableListAdapter extends BaseExpandableListAda
             convertView = layoutInflater.inflate(R.layout.manage_restaurants_list_item, null);
         }
 
-        //TODO: add click events for buttons
         Button manageMenuItems = (Button)convertView.findViewById(R.id.manageMenuItems);
         Button viewSales = (Button)convertView.findViewById(R.id.viewSales);
         Button viewDeliveryArea = (Button)convertView.findViewById(R.id.viewDeliveryArea);
+        Button manageDrivers = (Button)convertView.findViewById(R.id.manageDrivers);
         Button rateDrivers = (Button)convertView.findViewById(R.id.rateDrivers);
+        Button deliveryHours = (Button)convertView.findViewById(R.id.deliveryHours);
 
         manageMenuItems.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -276,6 +292,17 @@ public class ManageRestaurantExpandableListAdapter extends BaseExpandableListAda
                 context.startActivity(intent);
             }
         });
+        manageDrivers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("Restaurant", selectedChild);
+                bundle.putString("key", selectedChild.getKey());
+                Intent intent = new Intent(context, ManageRestaurantDrivers.class);
+                intent.putExtras(bundle);
+                context.startActivity(intent);
+            }
+        });
         rateDrivers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -286,6 +313,15 @@ public class ManageRestaurantExpandableListAdapter extends BaseExpandableListAda
                 bundle.putSerializable("Restaurant", selectedChild);
                 bundle.putString("key", selectedChild.getKey());
                 intent.putExtras(bundle);
+                context.startActivity(intent);
+            }
+        });
+        deliveryHours.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, CreateDeliveryHoursActivity.class);
+                intent.putExtra("ownerID",selectedChild.getKey());
+                intent.putExtra("editOrCreate", "edit");
                 context.startActivity(intent);
             }
         });

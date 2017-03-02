@@ -18,27 +18,20 @@ public class User extends Entity implements Serializable{
     private String zip;
     private String phoneNumber;
     private String email;
-    private String username;
-    private Boolean active;
-
-
     private String authUserID;
+    private String restaurantId;
 
     public User(){
 
     }
-
-
 
     public void setAuthUserID(String authUserID) {
         this.authUserID = authUserID;
     }
 
     public String getAuthUserID() {
-
         return authUserID;
     }
-
 
     public String getFirstName() {
         return firstName;
@@ -70,14 +63,6 @@ public class User extends Entity implements Serializable{
 
     public String getEmail() {
         return email;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public Boolean getActive() {
-        return active;
     }
 
     public void setFirstName(String firstName) {
@@ -112,12 +97,19 @@ public class User extends Entity implements Serializable{
         this.email = email;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    /**
+     * get the restaurant id the driver is assigned to
+     * @return unique identifier of the restaurant
+     */
+    public String getRestaurantId() {
+        return restaurantId;
     }
 
-    public void setActive(Boolean active) {
-        this.active = active;
+    /**
+     * sets the restaurant the driver is assigned to
+     * @param restaurantId indicates the unique identifier of the restaurant
+     */
+    public void setRestaurantId(String restaurantId) {
+        this.restaurantId = restaurantId;
     }
-
 }

@@ -1,49 +1,90 @@
 package com.gmail.dleemcewen.tandemfieri;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.widget.Button;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gmail.dleemcewen.tandemfieri.Entities.User;
+import com.gmail.dleemcewen.tandemfieri.Logging.LogWriter;
 import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.logging.Level;
 
 public class RestaurantMainMenu extends AppCompatActivity {
 
-    Button manageRestaurants;
-    User user;
+    private User user;
+
+    private TextView restaurantMainMenuName;
+    private Button restaurantMainMenuAssignDrivers;
+    private Button restaurantMainMenuManageDrivers;
+    private Button restaurantMainMenuAssignBusinessHours;
+    private Button restaurantMainMenuManageRestaurants;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_main_menu);
 
-        Bundle bundle = new Bundle();
-        bundle = this.getIntent().getExtras();
-        final User user = (User) bundle.getSerializable("User");
+        Bundle bundle = this.getIntent().getExtras();
+        user = (User) bundle.getSerializable("User");
 
-        Toast.makeText(getApplicationContext(),"The user is " + user.getEmail(), Toast.LENGTH_LONG).show();
+        restaurantMainMenuName = (TextView) findViewById(R.id.restaurantMainMenuName);
+        restaurantMainMenuAssignDrivers = (Button) findViewById(R.id.restaurantMainMenuAssignDriversButton);
+        restaurantMainMenuManageDrivers = (Button) findViewById(R.id.restaurantMainMenuManageDriversButton);
+        restaurantMainMenuManageRestaurants = (Button) findViewById(R.id.restaurantMainMenuManageRestaurantsButton);
+        restaurantMainMenuAssignBusinessHours = (Button) findViewById(R.id.restaurantMainMenuAssignBusinessHoursButton);
 
-        //TODO: remove this, just for testing
-        manageRestaurants = (Button)findViewById(R.id.manageRestaurants);
-        manageRestaurants.setOnClickListener(new View.OnClickListener() {
+        restaurantMainMenuName.setText("Hello, " + user.getFirstName() + "!");
+
+        restaurantMainMenuAssignDrivers.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                //TODO: undo this!  just for testing....
-                Bundle bundle = new Bundle();
-                Intent intent = new Intent(RestaurantMainMenu.this, ManageRestaurants.class);
-                bundle.putSerializable("User", user);
-                intent.putExtras(bundle);
-                startActivity(intent);
-
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "Assign Drivers", Toast.LENGTH_SHORT).show();
             }
         });
+
+        restaurantMainMenuManageDrivers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                /*
+                Intent intent = new Intent(RestaurantMainMenu.this, ManageRestaurantDrivers.class);
+                startActivity(intent);
+                */
+                Toast.makeText(getApplicationContext(), "Manage Drivers", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        restaurantMainMenuAssignBusinessHours.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(RestaurantMainMenu.this, CreateDeliveryHoursActivity.class);
+                startActivity(intent);
+
+                /*
+                Toast.makeText(getApplicationContext(), "Assign Business Hours", Toast.LENGTH_SHORT).show();
+                */
+            }
+        });
+
+        restaurantMainMenuManageRestaurants.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                /*
+                Intent intent = new Intent(RestaurantMainMenu.this, ManageRestaurants.class);
+                startActivity(intent);
+                */
+                Toast.makeText(getApplicationContext(), "Manage Resturaunts", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        LogWriter.log(getApplicationContext(), Level.INFO, "The user is " + user.getEmail());
     }//end onCreate
 
     //create menu
@@ -112,7 +153,7 @@ public class RestaurantMainMenu extends AppCompatActivity {
     //for now this goes to main menu until I get the name of the activity - look on git hub?
     private void goToManageRestaurants(){
         Bundle bundle = new Bundle();
-        Intent intent = new Intent(RestaurantMainMenu.this, MainActivity.class);
+        Intent intent = new Intent(RestaurantMainMenu.this, ManageRestaurants.class);
         bundle.putSerializable("User", user);
         intent.putExtras(bundle);
         startActivity(intent);

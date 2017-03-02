@@ -1,23 +1,31 @@
 package com.gmail.dleemcewen.tandemfieri;
 
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.Button;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gmail.dleemcewen.tandemfieri.Entities.User;
+import com.gmail.dleemcewen.tandemfieri.Logging.LogWriter;
 import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.logging.Level;
 
 public class DinerMainMenu extends AppCompatActivity {
 
-    User user;
+    private User user;
+
+    private TextView dinerMainMenuName;
+    private Button dinerMainMenuPlaceOrder;
+    private Button dinerMainMenuTrackOrders;
+    private Button dinerMainMenuViewOrderHistory;
+    private Button dinerMainMenuRateResturaunts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,9 +36,43 @@ public class DinerMainMenu extends AppCompatActivity {
         bundle = this.getIntent().getExtras();
         user = (User) bundle.getSerializable("User");
 
-        Toast.makeText(getApplicationContext(),"The user is " + user.getEmail(), Toast.LENGTH_LONG).show();
+        dinerMainMenuName = (TextView) findViewById(R.id.dinerMainMenuName);
+        dinerMainMenuPlaceOrder = (Button) findViewById(R.id.dinerMainMenuPlaceOrderButton);
+        dinerMainMenuTrackOrders = (Button) findViewById(R.id.dinerMainMenuTrackOrdersButton);
+        dinerMainMenuViewOrderHistory = (Button) findViewById(R.id.dinerMainMenuViewOrderHistoryButton);
+        dinerMainMenuRateResturaunts = (Button) findViewById(R.id.dinerMainMenuRateRestaurantButton);
 
-       
+        dinerMainMenuName.setText("Hello, " + user.getFirstName() + "!");
+
+        dinerMainMenuPlaceOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "Place Order", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        dinerMainMenuTrackOrders.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "Track Orders", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        dinerMainMenuViewOrderHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "View Order History", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        dinerMainMenuRateResturaunts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "Rate Restaurants", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        LogWriter.log(getApplicationContext(), Level.INFO, "The user is " + user.getEmail());
     }//end onCreate
 
     //create menu
@@ -54,6 +96,9 @@ public class DinerMainMenu extends AppCompatActivity {
                 return true;
             case R.id.edit_password:
                 editPassword();
+                return true;
+            case R.id.map:
+                launchMap();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -89,6 +134,16 @@ public class DinerMainMenu extends AppCompatActivity {
         dinerBundle.putSerializable("User", user);
         intent.putExtras(dinerBundle);
         intent.putExtra("UserType", "Diner");
+        startActivity(intent);
+    }
+
+    private void launchMap(){
+        //need to send user type so that the user can be located in the database
+        //Bundle dinerBundle = new Bundle();
+        Intent intent = new Intent(DinerMainMenu.this, DinerMapActivity.class);
+        //dinerBundle.putSerializable("User", user);
+        //intent.putExtras(dinerBundle);
+        //intent.putExtra("UserType", "Diner");
         startActivity(intent);
     }
 }//end Activity
